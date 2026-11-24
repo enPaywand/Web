@@ -1,0 +1,41 @@
+{{- $profile := hugo.Data.profile -}}
+{{- $words := split (strings.TrimSpace $profile.name) " " -}}
+{{- $initials := "" -}}
+{{- if gt (len $words) 1 -}}
+  {{- $initials = printf "%.1s%.1s" (index $words 0) (index $words (sub (len $words) 1)) | upper -}}
+{{- else if gt (len $words) 0 -}}
+  {{- $initials = printf "%.1s" (index $words 0) | upper -}}
+{{- end -}}
+{{- /* Anchor links are defined once, here. Order must match the homepage. */ -}}
+{{- $nav := slice
+  (dict "label" "About"     "href" "#about")
+  (dict "label" "Skills"    "href" "#skills")
+  (dict "label" "Projects"  "href" "#projects")
+  (dict "label" "Education" "href" "#education")
+  (dict "label" "Contact"   "href" "#contact")
+-}}
+<header class="site-header" id="top" data-header>
+  <div class="container site-header__inner">
+
+    <a class="brand" href="{{ "/" | relURL }}" aria-label="{{ $profile.name }} — home">
+      <span class="brand__mark" aria-hidden="true">{{ $initials }}</span>
+      <span class="brand__name">{{ $profile.name }}</span>
+    </a>
+
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <ul class="site-nav__list">
+        {{- range $nav }}
+        <li><a class="site-nav__link" href="{{ .href }}" data-nav-link>{{ .label }}</a></li>
+        {{- end }}
+      </ul>
+      <a class="btn btn--primary btn--sm site-nav__cta" href="#contact">Get in touch</a>
+    </nav>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+      <span class="sr-only">Toggle navigation</span>
+      <span class="nav-toggle__icon nav-toggle__icon--open">{{ partial "icon.html" (dict "name" "menu") }}</span>
+      <span class="nav-toggle__icon nav-toggle__icon--close">{{ partial "icon.html" (dict "name" "close") }}</span>
+    </button>
+
+  </div>
+</header>

@@ -1,0 +1,49 @@
+# ===========================================================================
+#  Hugo configuration — personal portfolio
+# ===========================================================================
+#  Personal details are NOT stored here. They live in data/profile.toml so
+#  the templates stay generic and you only ever edit data files.
+# ===========================================================================
+
+# TODO: replace with your real domain or GitHub Pages URL once deployed,
+# e.g. "https://paywandismail.github.io/"
+baseURL = "https://example.com/"
+locale = "en"
+defaultContentLanguage = "en"
+title = "Paywand Ismail"
+
+# This site only uses regular pages and the project list, so the taxonomy
+# machinery (tags/categories archives) would just generate dead URLs.
+disableKinds = ["taxonomy", "term"]
+
+enableRobotsTXT = true
+summaryLength = 40
+
+[params]
+  author = "Paywand Ismail"
+  description = "Backend developer & Software Engineering student in Erbil, Iraq. Building REST APIs, auth systems and database apps with Node.js, TypeScript and PostgreSQL."
+  keywords = [
+    "Paywand Ismail",
+    "backend developer",
+    "Node.js developer",
+    "Express.js",
+    "TypeScript",
+    "PostgreSQL",
+    "software engineering student",
+    "Erbil",
+  ]
+  # TODO: add a 1200x630 social preview image at static/images/og-cover.png
+  ogImage = "images/og-cover.png"
+  locale = "en_US"
+
+[markup]
+  [markup.goldmark.renderer]
+    # Keep raw HTML out of Markdown: everything visual belongs in templates.
+    unsafe = false
+  [markup.highlight]
+    noClasses = false
+
+[outputs]
+  home = ["HTML"]
+  section = ["HTML"]
+  page = ["HTML"]

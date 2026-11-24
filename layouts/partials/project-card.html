@@ -1,0 +1,75 @@
+{{- /*
+  One project card, driven entirely by a content/projects/*.md file.
+
+  partial "project-card.html" (dict "page" $page "index" 2)
+
+  Front matter keys: title, description, tech, status, repo, demo, image.
+  Values in [brackets] are placeholders and are not rendered as links.
+*/ -}}
+{{- $page := .page -}}
+{{- $index := .index -}}
+
+{{- $repo := "" -}}
+{{- with $page.Params.repo -}}
+  {{- if not (strings.HasPrefix . "[") }}{{ $repo = . }}{{ end -}}
+{{- end -}}
+
+{{- $demo := "" -}}
+{{- with $page.Params.demo -}}
+  {{- if not (strings.HasPrefix . "[") }}{{ $demo = . }}{{ end -}}
+{{- end -}}
+
+{{- $image := "" -}}
+{{- with $page.Params.image -}}
+  {{- if os.FileExists (path.Join "static" .) }}{{ $image = . }}{{ end -}}
+{{- end -}}
+
+<article class="card" data-reveal>
+  <div class="card__media">
+    {{- if $image }}
+    <img class="card__img" src="{{ $image | relURL }}" alt="" loading="lazy" width="640" height="400">
+    {{- else }}
+    <span class="card__index" aria-hidden="true">{{ printf "%02d" $index }}</span>
+    {{- end }}
+  </div>
+
+  <div class="card__body">
+    <div class="card__head">
+      <h3 class="card__title">{{ $page.Title }}</h3>
+      {{- with $page.Params.status }}
+      <span class="card__status{{ if eq (lower .) "in progress" }} card__status--progress{{ else }} card__status--done{{ end }}">{{ . }}</span>
+      {{- end }}
+    </div>
+
+    <p class="card__desc">{{ $page.Params.description }}</p>
+
+    {{- with $page.Params.tech }}
+    <ul class="card__tech">
+      {{- range first 4 . }}
+      <li class="chip">{{ . }}</li>
+      {{- end }}
+      {{- $rest := sub (len .) 4 }}
+      {{- if gt $rest 0 }}
+      <li class="chip chip--more" title="{{ delimit . ", " }}">+{{ $rest }}</li>
+      {{- end }}
+    </ul>
+    {{- end }}
+  </div>
+
+  {{- if or $repo $demo }}
+  <div class="card__foot">
+    {{- with $repo }}
+    <a class="card__link" href="{{ . }}" target="_blank" rel="noopener noreferrer">
+      Code {{ partial "icon.html" (dict "name" "arrow-up-right") }}
+      <span class="sr-only">— {{ $page.Title }} (opens in a new tab)</span>
+    </a>
+    {{- end }}
+    {{- with $demo }}
+    <a class="card__link" href="{{ . }}" target="_blank" rel="noopener noreferrer">
+      Live demo {{ partial "icon.html" (dict "name" "external") }}
+      <span class="sr-only">— {{ $page.Title }} (opens in a new tab)</span>
+    </a>
+    {{- end }}
+  </div>
+  {{- end }}
+</article>

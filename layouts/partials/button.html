@@ -1,0 +1,22 @@
+{{- /*
+  Reusable button.
+
+  partial "button.html" (dict
+    "href"     "#projects"
+    "label"    "View projects"
+    "variant"  "primary"      // primary | ghost
+    "icon"     "arrow-right"  // optional icon name
+    "external" false          // adds target/rel + screen-reader hint
+  )
+*/ -}}
+{{- $variant := .variant | default "primary" -}}
+{{- $external := .external | default false -}}
+{{- $class := "btn btn--" -}}
+{{- $class = printf "%s%s" $class $variant -}}
+{{- with .class }}{{ $class = printf "%s %s" $class . }}{{ end -}}
+<a class="{{ $class }}" href="{{ .href }}"
+  {{- if $external }} target="_blank" rel="noopener noreferrer"{{ end }}>
+  <span>{{ .label }}</span>
+  {{- with .icon }}{{ partial "icon.html" (dict "name" .) }}{{ end -}}
+  {{- if $external }}<span class="sr-only">(opens in a new tab)</span>{{ end -}}
+</a>

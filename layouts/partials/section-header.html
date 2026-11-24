@@ -1,0 +1,19 @@
+{{- /*
+  Section heading block, used by every content section.
+
+  partial "section-header.html" (dict
+    "eyebrow" "Skills"
+    "title"   "The stack I build with"
+    "lead"    "One supporting sentence."
+    "id"      "skills-title"   // referenced by aria-labelledby
+  )
+*/ -}}
+<div class="section-header" data-reveal>
+  {{- with .eyebrow }}
+  <p class="eyebrow">{{ . }}</p>
+  {{- end }}
+  <h2 class="section-title"{{ with .id }} id="{{ . }}"{{ end }}>{{ .title }}</h2>
+  {{- with .lead }}
+  <p class="section-lead">{{ . }}</p>
+  {{- end }}
+</div>

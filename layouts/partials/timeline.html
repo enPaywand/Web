@@ -1,0 +1,36 @@
+{{- /*
+  Vertical timeline, shared by education and experience.
+
+  partial "timeline.html" (dict "entries" $slice)
+
+  Each entry: title, org, meta, period, status, details (optional list).
+*/ -}}
+<ol class="timeline">
+  {{- range .entries }}
+  <li class="timeline__item" data-reveal>
+    <span class="timeline__marker" aria-hidden="true"></span>
+    <div class="timeline__body">
+      <div class="timeline__head">
+        <h3 class="timeline__title">{{ .title }}</h3>
+        {{- with .status }}
+        <span class="timeline__badge">{{ . }}</span>
+        {{- end }}
+      </div>
+      <p class="timeline__org">{{ .org }}</p>
+      {{- with .meta }}
+      <p class="timeline__meta">{{ . }}</p>
+      {{- end }}
+      {{- with .period }}
+      <p class="timeline__period">{{ . }}</p>
+      {{- end }}
+      {{- with .details }}
+      <ul class="timeline__details">
+        {{- range . }}
+        <li>{{ . }}</li>
+        {{- end }}
+      </ul>
+      {{- end }}
+    </div>
+  </li>
+  {{- end }}
+</ol>

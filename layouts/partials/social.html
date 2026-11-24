@@ -1,0 +1,39 @@
+{{- /*
+  Social links built from data/profile.toml.
+
+  Values still wrapped in [brackets] are treated as placeholders and skipped,
+  so the site never ships a link to "[https://github.com/yourusername]".
+  Fill them in and the icons appear automatically.
+*/ -}}
+{{- $links := hugo.Data.profile.links -}}
+{{- $items := slice -}}
+
+{{- range $key, $href := $links -}}
+  {{- if and $href (not (strings.HasPrefix $href "[")) -}}
+    {{- if eq $key "github" -}}
+      {{- $items = $items | append (dict "name" "github" "label" "GitHub" "href" $href) -}}
+    {{- else if eq $key "linkedin" -}}
+      {{- $items = $items | append (dict "name" "linkedin" "label" "LinkedIn" "href" $href) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with hugo.Data.profile.email -}}
+  {{- if not (strings.HasPrefix . "[") -}}
+    {{- $items = $items | append (dict "name" "mail" "label" "Email" "href" (printf "mailto:%s" .)) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with $items }}
+<ul class="social-list">
+  {{- range . }}
+  <li>
+    <a class="social-link" href="{{ .href }}"
+      {{- if ne .name "mail" }} target="_blank" rel="noopener noreferrer"{{ end }}
+       aria-label="{{ .label }}">
+      {{ partial "icon.html" (dict "name" .name) }}
+    </a>
+  </li>
+  {{- end }}
+</ul>
+{{- end -}}

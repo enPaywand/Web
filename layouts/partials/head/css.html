@@ -1,0 +1,19 @@
+{{- /*
+  Stylesheet pipeline.
+  Files are listed explicitly so load order is deterministic (tokens before
+  base before layout). They are concatenated into one file, minified, and
+  fingerprinted so browsers can cache it forever.
+
+  To add a stylesheet: drop it in assets/css/ and add its path to $files.
+*/ -}}
+{{- $files := slice "css/tokens.css" "css/base.css" "css/layout.css" "css/components.css" "css/sections.css" -}}
+{{- $bundle := slice -}}
+{{- range $files -}}
+  {{- with resources.Get . -}}
+    {{- $bundle = $bundle | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- $css := $bundle | resources.Concat "css/bundle.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">
+<link rel="preload" href="{{ "fonts/inter-var.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "fonts/jetbrains-mono-var.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>

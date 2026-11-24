@@ -1,0 +1,5 @@
+{{- /* JavaScript pipeline: one bundle, minified and fingerprinted. */ -}}
+{{- with resources.Get "js/main.js" -}}
+  {{- $js := . | minify | fingerprint -}}
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{- end -}}

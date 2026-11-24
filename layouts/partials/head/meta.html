@@ -1,0 +1,66 @@
+{{- /*
+  Document metadata: title, description, canonical, Open Graph, Twitter card.
+  Page front matter can override the description with `description = "..."`.
+*/ -}}
+{{- $title := site.Title -}}
+{{- if not .IsHome -}}
+  {{- $title = printf "%s · %s" .Title site.Title -}}
+{{- end -}}
+{{- $desc := site.Params.description -}}
+{{- with .Description }}{{ $desc = . }}{{ end -}}
+{{- $ogImage := "" -}}
+{{- with site.Params.ogImage -}}
+  {{- if os.FileExists (path.Join "static" .) }}{{ $ogImage = . }}{{ end -}}
+{{- end -}}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $desc }}">
+<link rel="canonical" href="{{ .Permalink }}">
+<meta name="author" content="{{ site.Params.author }}">
+<meta name="robots" content="{{ if eq .Kind "404" }}noindex, nofollow{{ else }}index, follow{{ end }}">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#08090b">
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:locale" content="{{ site.Params.locale }}">
+<meta name="twitter:card" content="{{ if $ogImage }}summary_large_image{{ else }}summary{{ end }}">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $desc }}">
+
+{{- /* Only emit the image tags once the file actually exists. */ -}}
+{{- with $ogImage }}
+<meta property="og:image" content="{{ . | absURL }}">
+<meta name="twitter:image" content="{{ . | absURL }}">
+{{- end -}}
+
+{{- if .IsHome -}}
+  {{- $profile := hugo.Data.profile -}}
+  {{- $sameAs := slice -}}
+  {{- with $profile.links.github -}}
+    {{- if not (strings.HasPrefix . "[") }}{{ $sameAs = $sameAs | append . }}{{ end -}}
+  {{- end -}}
+  {{- with $profile.links.linkedin -}}
+    {{- if not (strings.HasPrefix . "[") }}{{ $sameAs = $sameAs | append . }}{{ end -}}
+  {{- end -}}
+  {{- $ld := dict
+    "@context" "https://schema.org"
+    "@type" "Person"
+    "name" $profile.name
+    "jobTitle" $profile.role
+    "description" $desc
+    "url" .Permalink
+  -}}
+  {{- with $profile.email -}}
+    {{- if not (strings.HasPrefix . "[") }}{{ $ld = merge $ld (dict "email" (printf "mailto:%s" .)) }}{{ end -}}
+  {{- end -}}
+  {{- with $sameAs -}}
+    {{- $ld = merge $ld (dict "sameAs" .) -}}
+  {{- end -}}
+<script type="application/ld+json">{{ $ld | jsonify | safeJS }}</script>
+{{- end -}}

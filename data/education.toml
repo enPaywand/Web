@@ -1,0 +1,24 @@
+# ===========================================================================
+#  education.toml — one [[entries]] block per qualification
+# ===========================================================================
+#  title   what you studied
+#  org     where
+#  meta    department / faculty / location
+#  period  date range — leave "" to hide it until you know the dates
+#  status  short badge, e.g. "Final year"
+#  details optional list of bullet points (coursework, achievements)
+# ===========================================================================
+
+[[entries]]
+  title  = "Software Engineering"
+  org    = "Salahaddin University"
+  meta   = "College of Engineering · Software and Informatics · Erbil"
+  period = ""          # TODO: e.g. "2022 — 2026"
+  status = "Final year"
+
+  # TODO: add relevant coursework if you want it listed, e.g.
+  # details = [
+  #   "Object-Oriented Programming",
+  #   "Data Structures and Algorithms",
+  #   "Database Management",
+  # ]

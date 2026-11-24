@@ -1,0 +1,19 @@
+# ===========================================================================
+#  experience.toml — work, internships, freelance, or open-source
+# ===========================================================================
+#  The Experience block stays hidden while this file has no entries.
+#
+#  To add one, uncomment the block below and fill it in. Use the same keys as
+#  education.toml: title, org, meta, period, status, details.
+# ===========================================================================
+
+# [[entries]]
+#   title   = "Backend Intern"
+#   org     = "Company name"
+#   meta    = "Erbil · Backend team"
+#   period  = "Jun 2025 — Sep 2025"
+#   status  = ""
+#   details = [
+#     "What you built, and the impact it had.",
+#     "One bullet per line.",
+#   ]

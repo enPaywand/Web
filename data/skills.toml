@@ -1,0 +1,68 @@
+# ===========================================================================
+#  skills.toml — one entry per row in the Skills section
+# ===========================================================================
+#  `items`   the tags shown in that row
+#  `primary` tags that get the accent treatment (the tools used most often)
+#
+#  Reorder groups, rename them, add or remove tags — the template follows.
+# ===========================================================================
+
+[[groups]]
+  name = "Languages"
+  items = ["JavaScript", "TypeScript", "Java", "PHP", "Python", "HTML & CSS"]
+  primary = ["JavaScript"]
+
+[[groups]]
+  name = "Backend"
+  items = [
+    "Node.js",
+    "Express.js",
+    "REST APIs",
+    "Express Middleware",
+    "MVC Architecture",
+    "Input Validation",
+    "Error Handling",
+    "Async JavaScript",
+    "Laravel",
+  ]
+  primary = ["Node.js", "Express.js", "REST APIs"]
+
+[[groups]]
+  name = "Databases"
+  items = [
+    "PostgreSQL",
+    "MongoDB",
+    "SQL",
+    "Prisma ORM",
+    "Database Design",
+    "Relationships",
+  ]
+  primary = ["PostgreSQL", "MongoDB", "Prisma ORM"]
+
+[[groups]]
+  name = "Auth & Security"
+  items = [
+    "JWT",
+    "Access & Refresh Tokens",
+    "Password Hashing",
+    "HTTP-only Cookies",
+    "Role-Based Access Control",
+  ]
+  primary = ["JWT", "Role-Based Access Control"]
+
+[[groups]]
+  name = "Tools"
+  items = ["Git", "GitHub", "Postman", "Docker", "pgAdmin", "VS Code"]
+  primary = ["Git", "GitHub"]
+
+[[groups]]
+  name = "Foundations"
+  items = [
+    "Data Structures",
+    "Algorithms",
+    "Object-Oriented Programming",
+    "Database Management",
+    "API Testing",
+    "Linux",
+  ]
+  primary = []

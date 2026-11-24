@@ -1,0 +1,55 @@
+# ===========================================================================
+#  profile.toml — your personal details, in one place
+# ===========================================================================
+#  Everything marked with [brackets] is a placeholder. Replace it with real
+#  values. Templates read these keys; nothing here is hard-coded in HTML.
+# ===========================================================================
+
+name        = "Paywand Ismail"
+short_name  = "Paywand"
+role        = "Backend Developer"
+role_secondary = "Software Engineering Student"
+location    = "Erbil, Kurdistan Region, Iraq"
+
+# TODO: replace with your real address
+email       = "ensw00923@student.su.edu.krd"
+
+# Shown as a small badge in the hero. Edit or remove the line if not accurate.
+availability = "Open to internship opportunities"
+
+# Optional profile photo. Put the file in static/images/ and set the path here,
+# e.g. photo = "images/portrait.jpg". Leave empty to show the monogram placeholder.
+photo = "images/mypic.jpg"
+
+# One-sentence pitch used under your name in the hero section.
+tagline = "I build backend systems — REST APIs, authentication flows, and database-driven applications — with Node.js, Express, and PostgreSQL."
+
+# About section: one string per paragraph. Add or remove paragraphs freely.
+about = [
+  "I'm a final-year Software Engineering student at Salahaddin University in Erbil, Kurdistan Region. Most of my time goes into backend development: designing APIs, modelling databases, and building the authentication and authorization layers that hold an application together.",
+  "My primary stack is JavaScript, Node.js, and Express. I'm currently deepening my TypeScript skills and working with PostgreSQL and Prisma ORM, moving from simple CRUD services toward properly structured, maintainable backend applications.",
+  "Long term, I want to become a strong backend engineer and grow from there into cloud engineering. I learn best by building real systems end to end — from the database schema through to the deployed API.",
+]
+
+[links]
+  github   = "[https://github.com/yourusername]"
+  linkedin = "[https://www.linkedin.com/in/yourusername]"
+  # Optional: link to a PDF CV in static/. Leave empty to hide the button.
+  resume   = ""
+
+# Quick facts shown beside the About text. Reorder or remove entries freely.
+[[facts]]
+  label = "Based in"
+  value = "Erbil, Kurdistan Region"
+
+[[facts]]
+  label = "Studying"
+  value = "Software Engineering, final year"
+
+[[facts]]
+  label = "Focus"
+  value = "Backend & REST APIs"
+
+[[facts]]
+  label = "Learning"
+  value = "TypeScript, PostgreSQL, Prisma"

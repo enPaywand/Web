@@ -1,0 +1,31 @@
+{{- $education := hugo.Data.education -}}
+{{- $experience := hugo.Data.experience -}}
+<section class="section" id="education" aria-labelledby="education-title">
+  <div class="container">
+    <div class="edu">
+
+      <div class="edu__aside">
+        {{ partial "section-header.html" (dict
+          "eyebrow" "Education"
+          "title"   "Where I'm studying"
+          "lead"    "Formal training in software engineering, alongside the projects I build on my own."
+          "id"      "education-title"
+        ) }}
+      </div>
+
+      <div class="edu__main">
+        {{- with $education.entries }}
+        {{ partial "timeline.html" (dict "entries" .) }}
+        {{- end }}
+
+        {{- with $experience }}
+          {{- with .entries }}
+        <h3 class="subsection-title">Experience</h3>
+        {{ partial "timeline.html" (dict "entries" .) }}
+          {{- end }}
+        {{- end }}
+      </div>
+
+    </div>
+  </div>
+</section>

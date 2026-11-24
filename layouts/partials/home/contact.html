@@ -1,0 +1,78 @@
+{{- $profile := hugo.Data.profile -}}
+{{- $email := $profile.email | default "" -}}
+{{- $emailIsReal := and $email (not (strings.HasPrefix $email "[")) -}}
+
+{{- /* Only real URLs become buttons; placeholders are skipped. */ -}}
+{{- $links := slice -}}
+{{- with $profile.links.github -}}
+  {{- if not (strings.HasPrefix . "[") -}}
+    {{- $links = $links | append (dict "label" "GitHub" "href" . "icon" "github") -}}
+  {{- end -}}
+{{- end -}}
+{{- with $profile.links.linkedin -}}
+  {{- if not (strings.HasPrefix . "[") -}}
+    {{- $links = $links | append (dict "label" "LinkedIn" "href" . "icon" "linkedin") -}}
+  {{- end -}}
+{{- end -}}
+{{- with $profile.links.resume -}}
+  {{- if not (strings.HasPrefix . "[") -}}
+    {{- $resumeHref := "" -}}
+    {{- if or (strings.HasPrefix . "http://") (strings.HasPrefix . "https://") -}}
+      {{- $resumeHref = . -}}
+    {{- else if os.FileExists (path.Join "static" .) -}}
+      {{- $resumeHref = . | relURL -}}
+    {{- end -}}
+    {{- with $resumeHref -}}
+      {{- $links = $links | append (dict "label" "Resume" "href" . "icon" "external") -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+<section class="section" id="contact" aria-labelledby="contact-title">
+  <div class="container">
+
+    {{ partial "section-header.html" (dict
+      "eyebrow" "Contact"
+      "title"   "Let's talk"
+      "lead"    "I'm looking for internship opportunities where I can work on real backend systems. If you have a role, a project, or a question, my inbox is open."
+      "id"      "contact-title"
+    ) }}
+
+    <div class="contact-card" data-reveal>
+      <div class="contact-card__main">
+        <p class="contact-card__label">Email</p>
+
+        {{- if $emailIsReal }}
+        <div class="contact-card__email-row">
+          <a class="contact-card__email" href="mailto:{{ $email }}">{{ $email }}</a>
+          <button class="copy-btn" type="button" data-copy-email="{{ $email }}" aria-label="Copy email address">
+            <span class="copy-btn__icon copy-btn__icon--copy">{{ partial "icon.html" (dict "name" "copy") }}</span>
+            <span class="copy-btn__icon copy-btn__icon--check">{{ partial "icon.html" (dict "name" "check") }}</span>
+            <span class="copy-btn__label">Copy</span>
+          </button>
+        </div>
+        {{- else }}
+        <p class="contact-card__email contact-card__email--placeholder"
+           title="Placeholder — set `email` in data/profile.toml">{{ $email }}</p>
+        {{- end }}
+
+        <span id="copy-status" class="sr-only" role="status" aria-live="polite"></span>
+      </div>
+
+      {{- with $links }}
+      <div class="contact-card__links">
+        {{- range . }}
+        {{ partial "button.html" (dict
+          "href"     .href
+          "label"    .label
+          "variant"  "ghost"
+          "icon"     .icon
+          "external" true
+        ) }}
+        {{- end }}
+      </div>
+      {{- end }}
+    </div>
+
+  </div>
+</section>

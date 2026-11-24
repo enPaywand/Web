@@ -1,0 +1,30 @@
+{{- $profile := hugo.Data.profile -}}
+<section class="section" id="about" aria-labelledby="about-title">
+  <div class="container">
+    <div class="about">
+
+      <div class="about__aside" data-reveal>
+        <p class="eyebrow">About</p>
+        <h2 class="about__heading" id="about-title">Backend focus, full-system thinking</h2>
+
+        {{- with $profile.facts }}
+        <dl class="facts">
+          {{- range . }}
+          <div class="facts__row">
+            <dt class="facts__label">{{ .label }}</dt>
+            <dd class="facts__value">{{ .value }}</dd>
+          </div>
+          {{- end }}
+        </dl>
+        {{- end }}
+      </div>
+
+      <div class="about__body" data-reveal>
+        {{- range $profile.about }}
+        <p>{{ . | markdownify }}</p>
+        {{- end }}
+      </div>
+
+    </div>
+  </div>
+</section>

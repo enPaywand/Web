@@ -1,0 +1,96 @@
+{{- $profile := hugo.Data.profile -}}
+{{- $words := split (strings.TrimSpace $profile.name) " " -}}
+{{- $initials := "" -}}
+{{- if gt (len $words) 1 -}}
+  {{- $initials = printf "%.1s%.1s" (index $words 0) (index $words (sub (len $words) 1)) | upper -}}
+{{- else if gt (len $words) 0 -}}
+  {{- $initials = printf "%.1s" (index $words 0) | upper -}}
+{{- end -}}
+
+{{- /* A real photo wins; otherwise the monogram placeholder is shown. */ -}}
+{{- $photo := "" -}}
+{{- with $profile.photo -}}
+  {{- if os.FileExists (path.Join "static" .) }}{{ $photo = . }}{{ end -}}
+{{- end }}
+
+{{- $resumeHref := "" -}}
+{{- with $profile.links.resume -}}
+  {{- if not (strings.HasPrefix . "[") -}}
+    {{- if or (strings.HasPrefix . "http://") (strings.HasPrefix . "https://") -}}
+      {{- $resumeHref = . -}}
+    {{- else if os.FileExists (path.Join "static" .) -}}
+      {{- $resumeHref = . | relURL -}}
+    {{- end -}}
+  {{- end -}}
+{{- end }}
+
+<section class="hero">
+  <div class="container hero__inner">
+
+    <div class="hero__body">
+      {{- with $profile.availability }}
+      <p class="hero__badge">
+        <span class="hero__dot" aria-hidden="true"></span>{{ . }}
+      </p>
+      {{- end }}
+
+      <h1 class="hero__title">{{ $profile.name }}</h1>
+
+      <p class="hero__role">
+        <span>{{ $profile.role }}</span>
+        <span class="hero__role-sep" aria-hidden="true">/</span>
+        <span class="hero__role-alt">{{ $profile.role_secondary }}</span>
+      </p>
+
+      <p class="hero__tagline">{{ $profile.tagline }}</p>
+
+      <div class="hero__actions">
+        {{ partial "button.html" (dict
+          "href" "#projects"
+          "label" "View projects"
+          "variant" "primary"
+          "icon" "arrow-right"
+        ) }}
+        {{ partial "button.html" (dict
+          "href" "#contact"
+          "label" "Get in touch"
+          "variant" "ghost"
+        ) }}
+        {{- with $resumeHref }}
+        {{ partial "button.html" (dict
+          "href" .
+          "label" "Resume"
+          "variant" "ghost"
+          "icon" "external"
+          "external" true
+        ) }}
+        {{- end }}
+      </div>
+
+      <div class="hero__meta">
+        {{ partial "social.html" . }}
+        <p class="hero__location">
+          {{ partial "icon.html" (dict "name" "pin") }}
+          <span>{{ $profile.location }}</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="hero__portrait">
+      <figure class="portrait">
+        <div class="portrait__frame">
+          {{- if $photo }}
+          <img class="portrait__img"
+               src="{{ $photo | relURL }}"
+               alt="Portrait of {{ $profile.name }}"
+               width="560" height="700">
+          {{- else }}
+          <span class="portrait__initials" aria-hidden="true">{{ $initials }}</span>
+          <span class="sr-only">Portrait placeholder — add a photo in data/profile.toml</span>
+          {{- end }}
+        </div>
+      </figure>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,22 @@
+{{- /* Every page in content/projects, ordered by its `weight` value. */ -}}
+{{- $projects := where site.RegularPages "Section" "projects" -}}
+<section class="section" id="projects" aria-labelledby="projects-title">
+  <div class="container">
+
+    {{ partial "section-header.html" (dict
+      "eyebrow" "Projects"
+      "title"   "Selected work"
+      "lead"    "Backend systems, APIs, and university coursework — built to understand how the pieces fit together."
+      "id"      "projects-title"
+    ) }}
+
+    {{- with $projects }}
+    <div class="cards">
+      {{- range $i, $project := .ByWeight }}
+      {{ partial "project-card.html" (dict "page" $project "index" (add $i 1)) }}
+      {{- end }}
+    </div>
+    {{- end }}
+
+  </div>
+</section>

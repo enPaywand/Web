@@ -1,0 +1,27 @@
+{{- $skills := hugo.Data.skills -}}
+<section class="section" id="skills" aria-labelledby="skills-title">
+  <div class="container">
+
+    {{ partial "section-header.html" (dict
+      "eyebrow" "Skills"
+      "title"   "The stack I build with"
+      "lead"    "Grouped by layer. The accent tags are the tools I reach for most days."
+      "id"      "skills-title"
+    ) }}
+
+    <div class="skill-list">
+      {{- range $skills.groups }}
+      <div class="skill-row" data-reveal>
+        <h3 class="skill-row__label">{{ .name }}</h3>
+        <ul class="skill-row__items">
+          {{- $primary := .primary }}
+          {{- range .items }}
+          <li class="tag{{ if and $primary (in $primary .) }} tag--core{{ end }}">{{ . }}</li>
+          {{- end }}
+        </ul>
+      </div>
+      {{- end }}
+    </div>
+
+  </div>
+</section>

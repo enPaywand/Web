@@ -1,0 +1,19 @@
+{{ define "main" }}
+<section class="section" aria-labelledby="not-found-title">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow">404</p>
+      <h1 class="section-title" id="not-found-title">Page not found</h1>
+      <p class="section-lead">The page you're looking for doesn't exist or has been moved.</p>
+    </div>
+    <div>
+      {{ partial "button.html" (dict
+        "href" ("/" | relURL)
+        "label" "Back to homepage"
+        "variant" "primary"
+        "icon" "arrow-right"
+      ) }}
+    </div>
+  </div>
+</section>
+{{ end }}
